@@ -21,10 +21,10 @@ public abstract class Bag {
 
 
     public Bag(String color, int capacity) {
-        this.colour = color;
+        this.color = color;
         this.capacity = capacity;
         this.numberOfContents = 0;
-        this.contents = new String[0];
+        this.contents = new String[capacity];
 
     }
     /*
@@ -63,7 +63,7 @@ public abstract class Bag {
      * TODO: Create a setter function called setColor which sets the
      *       color of this bag to the given color.
      */
-    public void setColor(color) {
+    public void setColor(String color) {
         this.color = color;
     }
 
@@ -82,9 +82,9 @@ public abstract class Bag {
      */
     public boolean addItem(String item) {
         if (this.numberOfContents < capacity) {
-            this.contents.append(item);
+            contents[numberOfContents] = item;
             this.numberOfContents++;
-            return false;
+            return true;
         }
         else {
             return false;
@@ -105,9 +105,16 @@ public abstract class Bag {
      *
      * @return
      */
-    public boolean popItem() {
-        this.numberOfContents--;
-        return this.contents.pop();
+    public String popItem() {
+        if (this.numberOfContents > 1) {
+            this.numberOfContents--;
+            String item = this.contents[numberOfContents];
+            this.contents[numberOfContents] = null;
+            return item;
+        }
+        else {
+            return null;
+        }
     }
 
 
@@ -120,7 +127,11 @@ public abstract class Bag {
      */
     public void increaseCapacity(int n) {
         this.capacity = this.capacity + n;
-
+        String[] newContents = new String[capacity + n];
+        for (int i = 0; i < numberOfContents; i++) {
+            newContents[i] = contents[i];
+        }
+        this.contents = newContents;
     }
 
     /**
